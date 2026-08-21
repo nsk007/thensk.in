@@ -11,8 +11,6 @@ const updateThemeToggle = () => {
   const isDark = document.body.dataset.theme === 'dark';
   themeToggle?.setAttribute('aria-pressed', String(isDark));
   themeToggle?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-  const label = themeToggle?.querySelector('.theme-toggle__label');
-  if (label) label.textContent = isDark ? 'Light mode' : 'Dark mode';
 };
 
 updateThemeToggle();
@@ -27,6 +25,7 @@ themeToggle?.addEventListener('click', () => {
 menuToggle?.addEventListener('click', () => {
   const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
   menuToggle.setAttribute('aria-expanded', String(!isOpen));
+  menuToggle.setAttribute('aria-label', isOpen ? 'Open navigation' : 'Close navigation');
   menuToggle.textContent = isOpen ? 'Menu' : 'Close';
   mobileMenu.hidden = isOpen;
 });
@@ -34,6 +33,7 @@ menuToggle?.addEventListener('click', () => {
 mobileMenu?.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', () => {
     menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation');
     menuToggle.textContent = 'Menu';
     mobileMenu.hidden = true;
   });
@@ -42,7 +42,11 @@ mobileMenu?.querySelectorAll('a').forEach((link) => {
 document.querySelectorAll('.filter-button').forEach((button) => {
   button.addEventListener('click', () => {
     const filter = button.dataset.filter;
-    document.querySelectorAll('.filter-button').forEach((item) => item.classList.toggle('is-active', item === button));
+    document.querySelectorAll('.filter-button').forEach((item) => {
+      const isActive = item === button;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
+    });
     document.querySelectorAll('.project').forEach((project) => {
       project.classList.toggle('is-hidden', filter !== 'all' && project.dataset.category !== filter);
     });

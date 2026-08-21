@@ -1,5 +1,28 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('#mobile-menu');
+const themeToggle = document.querySelector('.theme-toggle');
+
+const savedTheme = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+document.body.dataset.theme = initialTheme;
+
+const updateThemeToggle = () => {
+  const isDark = document.body.dataset.theme === 'dark';
+  themeToggle?.setAttribute('aria-pressed', String(isDark));
+  themeToggle?.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  const label = themeToggle?.querySelector('.theme-toggle__label');
+  if (label) label.textContent = isDark ? 'Light mode' : 'Dark mode';
+};
+
+updateThemeToggle();
+
+themeToggle?.addEventListener('click', () => {
+  const nextTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.body.dataset.theme = nextTheme;
+  localStorage.setItem('theme', nextTheme);
+  updateThemeToggle();
+});
 
 menuToggle?.addEventListener('click', () => {
   const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';

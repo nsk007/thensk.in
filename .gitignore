@@ -1,0 +1,15 @@
+# Netlify local state
+.netlify/
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+
+# Local development files
+*.log
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db

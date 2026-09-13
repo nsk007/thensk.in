@@ -18,6 +18,13 @@
   <meta name="twitter:description" content="Websites, applications, cloud platforms, APIs, and AI-enabled software built with intent." />
   <meta name="theme-color" content="#f3f0e8" />
   <title>Nataraja Sharma K — Software Engineer</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8VDMS18E1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K8VDMS18E1');
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -139,8 +146,34 @@
       </section>
     </main>
 
-    <footer class="site-footer"><p>© 2026 Nataraja Sharma K</p><div class="social-links" aria-label="Contact links"><a href="https://www.linkedin.com/in/nataraja-sharma" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://wa.me/message/TITIOJZOUKYRG1" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="mailto:nsk.prof@gmail.com?subject=Connect%20with%20me">Email ↗</a></div><p class="footer-mark">Built for the next useful thing.</p></footer>
+    <footer class="site-footer"><p>© 2026 Nataraja Sharma K</p><div class="social-links" aria-label="Contact links"><a href="https://www.linkedin.com/in/nataraja-sharma" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://wa.me/message/TITIOJZOUKYRG1" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a href="mailto:nsk.prof@gmail.com?subject=Connect%20with%20me">Email ↗</a></div><p class="footer-mark">Built for the next useful thing.</p>
+      <div style="margin-top:8px;text-align:center;font-size:12px;color:#6b7280;">
+        <span>Visitors: </span><strong id="visitor-count">--</strong>
+      </div>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+      (function () {
+        const slug = 'thensk-in-home';
+        const storageKey = 'visitor-count:' + slug;
+        const countEl = document.getElementById('visitor-count');
+        if (!countEl) return;
+        const alreadyCounted = localStorage.getItem(storageKey) === '1';
+        const apiUrl = 'https://api.countapi.xyz/' + (alreadyCounted ? 'get' : 'hit') + '/' + slug + '/visits';
+        fetch(apiUrl)
+          .then((res) => res.ok ? res.json() : Promise.reject(new Error('count fetch failed')))
+          .then((data) => {
+            const value = Number(data.value || 0);
+            const displayValue = value === 0 ? 100 : value;
+            if (!Number.isFinite(displayValue) || displayValue < 0) throw new Error('invalid count');
+            countEl.textContent = displayValue.toLocaleString();
+            if (!alreadyCounted) localStorage.setItem(storageKey, '1');
+          })
+          .catch(() => {
+            countEl.parentElement.style.display = 'none';
+          });
+      })();
+    </script>
   </div>
-  <script src="script.js"></script>
 </body>
 </html>
